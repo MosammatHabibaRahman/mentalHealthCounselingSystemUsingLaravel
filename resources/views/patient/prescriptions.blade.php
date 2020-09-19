@@ -45,42 +45,42 @@
                         <strong>My Prescriptions</strong>
                     </div>
                     <div class="card-body">
-                      <% if(pres==null) { %>
-                        <div class="alert alert-info" role="alert" name="alert">
-                          No prescriptions available as of now.
-                        </div>
-                      <%} else{ %>
-                          <table class="table table-hover mt-4">
-                            <thead class="text-center">
-                              <tr>
-                                  <th>Name</th>
-                                  <th>Qty</th>
-                                  <th>Type</th>
-                                  <th>Duration</th>
-                                  <th>Timing</th>
-                                  <th>Date</th>
-                                  <th>Notes</th>
-                                  <th>Download</th>
-                              </tr>
-                            </thead>
-                            <tbody class="text-center">
-                                <% for(var i=0; i<pres.length; i++) { %>
-                                    <tr>
-                                      <td><%= pres[i].name %></td>
-                                      <td><%= pres[i].qty %></td>
-                                      <td><%= pres[i].type %></td>
-                                      <td><%= pres[i].duration %></td>
-                                      <td><%= pres[i].timing %></td>
-                                      <td><%= pres[i].date %></td>
-                                      <td><%= pres[i].notes %></td>
-                                      <td>
-                                        <button type="button" class="btn btn-primary btn-sm" name="download">Download</button>
-                                      </td>
-                                    </tr>
-                                 <% }} %>
-
-                            </tbody>
-                        </table>
+                        @if(count($pres) <= 0)
+                            <div class="alert alert-info" role="alert" name="alert">
+                            No prescriptions available as of now.
+                            </div>
+                        @else
+                            <table class="table table-hover mt-4">
+                                <thead class="text-center">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Qty</th>
+                                    <th>Type</th>
+                                    <th>Duration</th>
+                                    <th>Timing</th>
+                                    <th>Date</th>
+                                    <th>Notes</th>
+                                    <th>Download</th>
+                                </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                    @for($i=0; $i<count($pres); $i++)
+                                        <tr>
+                                            <td>{{$pres[$i]->medName}}</td>
+                                            <td>{{$pres[$i]->quantity}}</td>
+                                            <td>{{$pres[$i]->medType}}</td>
+                                            <td>{{$pres[$i]->duration}}</td>
+                                            <td>{{$pres[$i]->timing}}</td>
+                                            <td>{{$pres[$i]->notes}}</td>
+                                            <td>{{$pres[$i]->created_at}}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary btn-sm" name="download">Download</button>
+                                            </td>
+                                        </tr>
+                                    @endfor
+                                </tbody>
+                            </table>
+                        @endif
                     </div>
                 </div>
             </div>

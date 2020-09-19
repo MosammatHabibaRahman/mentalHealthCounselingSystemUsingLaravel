@@ -32,6 +32,7 @@
             </ul>
         </div>
         <form class="form-inline my-2 my-lg-0">
+            @csrf
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
         </form>
@@ -45,73 +46,89 @@
                     </div>
                     <div class="card-body">
                         <form method="post">
+                            @csrf
                             <div class="row">
                                 <div class="col-12 col-md-4">
                                     <div class="form-group">
                                         <label for="height"><strong>Height:</strong></label>
-                                        <input type="number" class="form-control" name="height" id="height" value="{{$record[0]['height']}}"/>
+                                        <input type="number" class="form-control @error('height') is-invalid @enderror" name="height" id="height" value="{{$record[0]['height']}}"/>
+                                        
+                                        @error('height')
+                                            <div class="alert alert-danger mt-4">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
-    
                                 <div class="col-12 col-md-4">
                                     <div class="form-group">
                                         <label for="weight"><strong>Weight:</strong></label>
-                                        <input type="number" class="form-control" name="weight" id="weight" value="{{$record[0]['weight']}}"/>
-                                      </div>
+                                        <input type="number" class="form-control @error('weight') is-invalid @enderror" name="weight" id="weight" value="{{$record[0]['weight']}}"/>
+                                        
+                                        @error('weight')
+                                            <div class="alert alert-danger mt-4">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
-
                                 <div class="col-12 col-md-4">
                                     <div class="form-group">
                                         <label for="bp"><strong>Blood Pressure:</strong></label>
-                                        <input type="number" class="form-control" name="bp" id="bp" value="{{$record[0]['bp']}}"/>
-                                      </div>
+                                        <input type="number" class="form-control @error('bp') is-invalid @enderror" name="bp" id="bp" value="{{$record[0]['bp']}}"/>
+
+                                        @error('bp')
+                                            <div class="alert alert-danger mt-4">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
-
                             </div>
-
                             <div class="row">
-                                
                                 <div class="col-12 col-md-4">
                                     <div class="form-group">
                                         <label for="pulseRate"><strong>Pulse Rate:</strong></label>
-                                        <input type="number" class="form-control" name="pulseRate" id="pulseRate" value="{{$record[0]['pulseRate']}}"/>
-                                      </div>
+                                        <input type="number" class="form-control @error('pulseRate') is-invalid @enderror" name="pulseRate" id="pulseRate" value="{{$record[0]['pulseRate']}}"/>
+
+                                        @error('pulseRate')
+                                            <div class="alert alert-danger mt-4">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
-    
                                 <div class="col-12 col-md-4">
                                     <div class="form-group">
                                         <label for="mood"><strong>Mood:</strong></label>
-                                        <select class="form-control" name="mood" id="mood">
-                                            <option>I'm Feeling...</option>
-                                            <option>Excellent</option>
-                                            <option>Good</option>
-                                            <option>Okay</option>
-                                            <option>Bad</option>
-                                            <option>Awful</option>
+                                        <select class="form-control @error('mood') is-invalid @enderror" name="mood" id="mood">
+                                            <option {{ $record[0]['mood'] == 'Excellent' ? 'selected' : '' }}>Excellent</option>
+                                            <option {{ $record[0]['mood'] == 'Good' ? 'selected' : '' }}>Good</option>
+                                            <option {{ $record[0]['mood'] == 'Okay' ? 'selected' : '' }}>Okay</option>
+                                            <option {{ $record[0]['mood'] == 'Bad' ? 'selected' : '' }}>Bad</option>
+                                            <option {{ $record[0]['mood'] == 'Awful' ? 'selected' : '' }}>Awful</option>
                                         </select>
+
+                                        @error('mood')
+                                            <div class="alert alert-danger mt-4">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
-    
                                 <div class="col-12 col-md-4">
                                     <div class="form-group">
                                         <label for="sleepDuration"><strong>Sleep Hours:</strong></label>
-                                        <input type="text" class="form-control" name="sleepDuration" id="sleepDuration" value="{{$record[0]['sleepDuration']}}"/>
-                                      </div>
+                                        <input type="number" class="form-control @error('sleepDuration') is-invalid @enderror" name="sleepDuration" id="sleepDuration" value="{{$record[0]['sleepDuration']}}"/>
+
+                                        @error('sleepDuration')
+                                            <div class="alert alert-danger mt-4">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
-    
                             </div>
-    
                             <div class="row">
                                 <div class="col-12 col-md-12">
                                     <div class="form-group">
                                         <label for="description"><strong>Description</strong></label>
-                                        <textarea class="form-control" name="description" id="description" rows="3">
-                                        {{$record[0]['description']}}
-                                        </textarea>
+                                        <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" rows="3">{{$record[0]['description']}}</textarea>
+
+                                        @error('description')
+                                            <div class="alert alert-danger mt-4">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row">
                                 <div class="col-12 col-md-12">
                                     <button type="submit" class="btn btn-primary btn-block" name="update" id="update">Update</button>

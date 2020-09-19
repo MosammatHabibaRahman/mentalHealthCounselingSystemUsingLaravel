@@ -28,6 +28,8 @@ Route::get('/patient/docList',[App\Http\Controllers\PatientsController::class, '
 Route::get('/patient/prescriptions',[App\Http\Controllers\PatientsController::class, 'prescriptions'])->name('patient.prescriptions');
 Route::get('/patient/subPlans',[App\Http\Controllers\PatientsController::class, 'subPlans'])->name('patient.subPlans');
 Route::get('/patient/createRecord',[App\Http\Controllers\PatientsController::class, 'createRecord'])->name('patient.createRecord');
+Route::post('/patient/createRecord',[App\Http\Controllers\PatientsController::class, 'insertRecord']);
 Route::get('/patient/updateRecord',[App\Http\Controllers\PatientsController::class, 'updateRecord'])->name('patient.updateRecord');
+Route::post('/patient/updateRecord',[App\Http\Controllers\PatientsController::class, 'editRecord']);
 Route::get('/patient/updateProfile',[App\Http\Controllers\PatientsController::class, 'updateProfile'])->name('patient.updateProfile');
 Route::get('/patient/changePassword',[App\Http\Controllers\PatientsController::class, 'changePassword'])->name('patient.changePassword');

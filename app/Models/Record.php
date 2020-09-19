@@ -9,4 +9,5 @@ class Record extends Model
 {
     use HasFactory;
     protected $table = 'health_records';
+    protected $primaryKey = 'hrid';
 }
