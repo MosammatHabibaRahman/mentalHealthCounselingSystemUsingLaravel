@@ -18,18 +18,25 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/patient',[App\Http\Controllers\PatientsController::class, 'index'])->name('patient.index');
+
+Route::get('/patient/create',[App\Http\Controllers\PatientsController::class, 'create'])->name('patient.create');
+Route::post('/patient/create',[App\Http\Controllers\PatientsController::class, 'store']);
+
 Route::get('/patient/profile',[App\Http\Controllers\PatientsController::class, 'profile'])->name('patient.profile');
 Route::get('/patient/appointment',[App\Http\Controllers\PatientsController::class, 'appointment'])->name('patient.appointment');
 Route::get('/patient/appointment/{id}',[App\Http\Controllers\PatientsController::class, 'deleteReq'])->name('patient.deleteReq');
 Route::get('/patient/docList',[App\Http\Controllers\PatientsController::class, 'docList'])->name('patient.docList');
 Route::get('/patient/prescriptions',[App\Http\Controllers\PatientsController::class, 'prescriptions'])->name('patient.prescriptions');
 Route::get('/patient/subPlans',[App\Http\Controllers\PatientsController::class, 'subPlans'])->name('patient.subPlans');
+
 Route::get('/patient/createRecord',[App\Http\Controllers\PatientsController::class, 'createRecord'])->name('patient.createRecord');
 Route::post('/patient/createRecord',[App\Http\Controllers\PatientsController::class, 'insertRecord']);
+
 Route::get('/patient/updateRecord',[App\Http\Controllers\PatientsController::class, 'updateRecord'])->name('patient.updateRecord');
 Route::post('/patient/updateRecord',[App\Http\Controllers\PatientsController::class, 'editRecord']);
+
 Route::get('/patient/updateProfile',[App\Http\Controllers\PatientsController::class, 'updateProfile'])->name('patient.updateProfile');
 Route::get('/patient/changePassword',[App\Http\Controllers\PatientsController::class, 'changePassword'])->name('patient.changePassword');

@@ -7,22 +7,70 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Patient;
 use App\Models\Record;
+use App\Models\Subscription;
 
 class PatientsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+
+    }
+
     public function index()
     {
         $id = auth()->user()->id;
         $patient = Patient::where('userId',$id)->get();
-        $record = Record::where('patientId',$patient[0]['id'])->get();
-        if(count($record) > 0)
+        
+        if(count($patient) > 0)
         {
-            return view('patient.index')->with('record',$record);
+            $record = Record::where('patientId',$patient[0]['id'])->get();
+            if(count($record) > 0)
+            {
+                return view('patient.index')->with('record',$record);
+            }
+            else
+            {
+                return redirect()->route('patient.createRecord');
+            }
         }
         else
         {
-            return redirect()->route('patient.createRecord');
+            return redirect()->route('patient.create');
         }
+    }
+
+    public function create()
+    {
+        $user = auth()->user();
+        return view('patient.create')->with('user',$user); 
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'phone'  => 'required|digits:11',
+            'propic'      => 'required|image'
+        ]);   
+
+        $user = auth()->user();
+        $patient = new Patient();
+        $patient->phone = $request->phone;
+        $patient->gender = $request->gender;
+        $patient->bloodType = $request->bloodType;
+        $patient->photo = $request->propic;
+        $patient->userId = $user->id;
+        $patient->save();
+
+        $p = Patient::where('userId',$user->id)->get();
+        $sub = new Subscription();
+        $sub->regDate = date("Y-m-d H:i:s");
+        $sub->paymentMethod = $request->pay;
+        $sub->patientId = $p[0]['id'];
+        $sub->subPlanId = $request->subPlan;
+        $sub->save();
+
+        return redirect()->route('patient.index'); 
     }
 
     function createRecord()
@@ -169,16 +217,5 @@ class PatientsController extends Controller
     {
         $subs = DB::table('subplans')->get();
         return view('patient.subPlans')->with('subs',$subs);
-    }
-
-
-    public function create()
-    {
-        //
-    }
-    
-    public function store(Request $request)
-    {
-        //
     }
 }

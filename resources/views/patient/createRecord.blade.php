@@ -42,7 +42,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header bg-primary text-light">
-                      <strong>Update Health Record</strong>
+                      <strong>Health Record</strong>
                     </div>
                     <div class="card-body">
                         <form method="post">
