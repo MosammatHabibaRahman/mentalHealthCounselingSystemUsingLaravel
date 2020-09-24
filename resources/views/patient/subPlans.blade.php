@@ -9,6 +9,23 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        {{ Auth::user()->name }}
+                    </a>
+            
+                    <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="{{ route('logout') }}"
+                          onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
+                          {{ __('Logout') }}
+                      </a>
+            
+                      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                          @csrf
+                      </form>
+                    </div>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/patient">Home</a>
                 </li>
@@ -26,9 +43,6 @@
                         <a class="dropdown-item active" href="/patient/subPlans">Subscription Plans</a>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
-                </li>
             </ul>
         </div>
         <form class="form-inline my-2 my-lg-0">
@@ -43,7 +57,7 @@
                 <div class="card">
                     <img src="{{asset('img/placeholder.jpg')}}" class="card-img-top">
                     <div class="card-body">
-                    <h5 class="card-title">{{$subs[0]->name}}</h5>
+                    <h5 class="card-title">{{$subs[0]->planName}}</h5>
                       <p class="card-text">
                         <ul>
                           <li>Duration: {{$subs[0]->duration}}</li>
@@ -59,7 +73,7 @@
                 <div class="card">
                     <img src="{{asset('img/placeholder.jpg')}}" class="card-img-top">
                     <div class="card-body">
-                      <h5 class="card-title">{{$subs[1]->name}}</h5>
+                      <h5 class="card-title">{{$subs[1]->planName}}</h5>
                       <p class="card-text">
                         <ul>
                             <li>Duration: {{$subs[1]->duration}}</li>
@@ -75,7 +89,7 @@
                 <div class="card">
                     <img src="{{asset('img/placeholder.jpg')}}" class="card-img-top">
                     <div class="card-body">
-                      <h5 class="card-title">{{$subs[2]->name}}</h5>
+                      <h5 class="card-title">{{$subs[2]->planName}}</h5>
                       <p class="card-text">
                         <ul>
                             <li>Duration: {{$subs[2]->duration}}</li>
