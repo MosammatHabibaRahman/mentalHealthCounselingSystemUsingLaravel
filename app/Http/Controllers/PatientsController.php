@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
 use App\Models\Patient;
 use App\Models\Record;
 use App\Models\Subscription;
+use Illuminate\Support\Facades\Hash;
 
 class PatientsController extends Controller
 {
@@ -172,6 +174,26 @@ class PatientsController extends Controller
     function changePassword()
     {
         return view('patient.changePassword');
+    }
+
+    function updatePassword(Request $request)
+    {
+        $request->validate([
+            'password'  => 'required',
+            'newpassword'      => 'required|confirmed|min:8',
+            'newpassword_confirmation' => 'required'
+        ]);
+
+        $encpassword = auth()->user()->password;
+
+        if(Hash::check($request->password,$encpassword))
+        {
+            print_r('true');
+            $user = User::find(auth()->user()->id);
+            $user->password = Hash::make($request->newpassword);
+            $user->save();
+        }
+        //return redirect()->route('logout');
     }
 
     function appointment()

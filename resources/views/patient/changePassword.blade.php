@@ -59,29 +59,36 @@
             </div>
             <div class="card-body">
               <form method="post">
-                <div class="form-group">
-                  <label for="username">
-                    <strong>Username</strong>
-                  </label>
-                  <input type="text" class="form-control" id="username" name="username" placeholder="Username"/>
-                </div>
+                @csrf
                 <div class="form-group">
                   <label for="password">
                     <strong>Current Password</strong>
                   </label>
-                  <input type="password" class="form-control" id="password" name="password" placeholder="Password"/>
+                <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Password"/>
+                
+                @error('password')
+                <div class="alert alert-danger mt-4">{{ $message }}</div>
+                @enderror
                 </div>
                 <div class="form-group">
                   <label for="password">
                     <strong>New Password</strong>
                   </label>
-                  <input type="password" class="form-control" id="newpassword" name="newpassword" placeholder="New Password"/>
+                  <input type="password" class="form-control @error('newpassword') is-invalid @enderror" id="newpassword" name="newpassword" placeholder="New Password" value="{{Old('newpassword')}}"/>
+                  
+                  @error('newpassword')
+                  <div class="alert alert-danger mt-4">{{ $message }}</div>
+                  @enderror
                 </div>
                 <div class="form-group">
                   <label for="password">
                     <strong>Retype Password</strong>
                   </label>
-                  <input type="password" class="form-control" id="repassword" name="repassword" placeholder="Retype Password"/>
+                  <input type="password" class="form-control @error('newpassword_confirmation') is-invalid @enderror" id="newpassword_confirmation" name="newpassword_confirmation" placeholder="Retype Password" value="{{Old('newpassword_confirmation')}}"/>
+                  
+                  @error('newpassword_confirmation')
+                  <div class="alert alert-danger mt-4">{{ $message }}</div>
+                  @enderror
                 </div>
                 <div>
                   <input type="submit" class="btn btn-primary btn-block" value="Change"/>

@@ -40,3 +40,4 @@ Route::post('/patient/updateRecord',[App\Http\Controllers\PatientsController::cl
 
 Route::get('/patient/updateProfile',[App\Http\Controllers\PatientsController::class, 'updateProfile'])->name('patient.updateProfile');
 Route::get('/patient/changePassword',[App\Http\Controllers\PatientsController::class, 'changePassword'])->name('patient.changePassword');
+Route::post('/patient/changePassword',[App\Http\Controllers\PatientsController::class, 'updatePassword']);
