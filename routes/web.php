@@ -33,6 +33,7 @@ Route::get('/patient/appointment/{id}',[App\Http\Controllers\PatientsController:
 Route::get('/patient/pdf',[App\Http\Controllers\PatientsController::class, 'getList'])->name('patient.getList');
 
 Route::get('/patient/docList',[App\Http\Controllers\PatientsController::class, 'docList'])->name('patient.docList');
+Route::post('/patient/docList',[App\Http\Controllers\PatientsController::class, 'search']);
 
 Route::get('/patient/prescriptions',[App\Http\Controllers\PatientsController::class, 'prescriptions'])->name('patient.prescriptions');
 Route::get('/patient/prescriptions/{date}',[App\Http\Controllers\PatientsController::class, 'getPresc'])->name('patient.getPresc');

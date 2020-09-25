@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>List of Doctors</title>
     <link href="/css/app.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -45,9 +46,11 @@
                 </li>
             </ul>
         </div>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <form class="form-inline my-2 my-lg-0" method="POST">
+            <input class="form-control mr-sm-2" type="search" name="search" id="search" placeholder="Search" aria-label="Search">
+            <div id="list"></div>
             <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+            {{ csrf_field() }}
         </form>
     </nav>
 
@@ -77,15 +80,7 @@
                                     <td>{{$doctors[$i]->qualifications}}</td>
                                     <td>{{$doctors[$i]->specialty}}</td>
                                     <td>
-                                        <div class="btn-group" role="group">
-                                            <button id="action" type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                              Action
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                              <a class="dropdown-item" href="#">Send Message</a>
-                                              <a class="dropdown-item" href="{{route('patient.appointment',[$doctors[$i]->id])}}">Make Appointment</a>
-                                            </div>
-                                        </div>
+                                        <a class="btn btn-primary btn-sm" href="{{route('patient.appointment')}}">Request Appointment</a>
                                     </td>
                                </tr>
                                @endfor
@@ -97,5 +92,35 @@
         </div>
     </div>
     <script src="/js/app.js"></script>
-    </body>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    
+    <script>
+        $(document).ready(function(){
+            $('#search').keyup(function(){ 
+        var search = $(this).val();
+            if(search != '')
+            {
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+            url:"{{ url('patient/docList') }}",
+            method:"POST",
+            data:{search:search, _token:_token},
+            success:function(docs){
+            $('#list').fadeIn();  
+                        $('#list').html(docs);
+            }
+            });
+            }
+        });
+
+        $(document).on('click', 'li', function(){  
+            $('#search').val($(this).text());  
+            $('#list').fadeOut();  
+        });  
+
+        });
+    </script>
+</body>
 </html>

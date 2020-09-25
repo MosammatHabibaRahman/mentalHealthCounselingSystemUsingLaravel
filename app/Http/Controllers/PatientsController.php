@@ -11,6 +11,7 @@ use App\Models\Record;
 use App\Models\Subscription;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use GuzzleHttp\Client;
 use PDF;
 
 class PatientsController extends Controller
@@ -291,8 +292,37 @@ class PatientsController extends Controller
     {
         $doctors = DB::table('doctors')
                     ->join('users','users.id','=','doctors.userId')
+                    ->select('doctors.id as id','users.name as name','doctors.gender','doctors.qualifications','doctors.specialty')
                     ->get();
         return view('patient.docList')->with('doctors',$doctors);
+    }
+
+    function search(Request $request)
+    {
+        if($request->get('search'))
+        {
+            $search = $request->search;
+
+            if($search == ''){
+                $doctors = DB::table('doctors')
+                ->join('users','users.id','=','doctors.userId')
+                ->select('doctors.id as id','users.name as name','doctors.gender','doctors.qualifications','doctors.specialty')
+                ->get();
+            }else{
+                $doctors = DB::table('doctors')
+                ->join('users','users.id','=','doctors.userId')
+                ->select('doctors.id as id','users.name as name','doctors.gender','doctors.qualifications','doctors.specialty')
+                ->where('name', 'like', '%' .$search . '%')
+                ->get();
+            }
+      
+            $response = array();
+            foreach($doctors as $doctor){
+               $response[] = array("value"=>$doctor->id,"label"=>$doctor->name);
+            }
+      
+            return response()->json($response);
+        }
     }
 
     function prescriptions()
