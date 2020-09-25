@@ -45,10 +45,6 @@
                 </li>
             </ul>
         </div>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
-        </form>
     </nav>
 
     <div class="container mt-4">
@@ -83,12 +79,12 @@
                                             <td>{{$pres[$i]->medName}}</td>
                                             <td>{{$pres[$i]->quantity}}</td>
                                             <td>{{$pres[$i]->medType}}</td>
-                                            <td>{{$pres[$i]->duration}}</td>
+                                            <td>{{$pres[$i]->duration}} Day(s)</td>
                                             <td>{{$pres[$i]->timing}}</td>
                                             <td>{{$pres[$i]->notes}}</td>
                                             <td>{{$pres[$i]->created_at}}</td>
                                             <td>
-                                                <button type="button" class="btn btn-primary btn-sm" name="download">Download</button>
+                                                <a class="btn btn-primary btn-sm" href="{{route('patient.getPresc', [$pres[$i]->created_at])}}">Download</a>
                                             </td>
                                         </tr>
                                     @endfor

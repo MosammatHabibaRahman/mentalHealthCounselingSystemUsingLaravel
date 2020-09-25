@@ -102,39 +102,51 @@
                         </form>
                     </div>
                 </div>
+              @if(count($list)<=0)
+                <div class="alert alert-info mt-4" role="alert" name="alert">
+                  No appointments requested or scheduled as of now. Fill the form above to submit an appointment request!
+                </div>
+              @else
               <div class="card mt-4">
                 <div class="card-header bg-primary text-light">
                   <strong>My Appointments</strong>
                 </div>
                 <div class="card-body">
                   <table class="table table-hover mt-2">
-                            <thead class="text-center">
-                                <tr>
-                                    <th>Doctor</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
-                                    <th>Delete Request</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-center">
-                              @for($i=0; $i < count($list); $i++)
-                              <tr>
-                                <td>{{$list[$i]->name}}</td>
-                                    @if(!$list[$i]->schedule)
-                                      <td>Not Scheduled Yet</td>
-                                    @else
-                                      <td>{{$list[$i]->schedule}}</td>
-                                    @endif
-                                    <td>{{$list[$i]->reqStatus}}</td>
-                                    <td>
-                                    <a class="btn btn-primary btn-sm" href="{{route('patient.deleteReq', [$list[$i]->aid])}}">Delete</a>
-                                    </td>
-                               </tr>
-                               @endfor
-                            </tbody>
-                        </table>
+                    <thead class="text-center">
+                        <tr>
+                            <th>Doctor</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Delete Request</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                      @for($i=0; $i < count($list); $i++)
+                      <tr>
+                        <td>{{$list[$i]->name}}</td>
+                            @if(!$list[$i]->schedule)
+                              <td>Not Scheduled Yet</td>
+                            @else
+                              <td>{{$list[$i]->schedule}}</td>
+                            @endif
+                            <td>{{$list[$i]->reqStatus}}</td>
+                            <td>
+                            <a class="btn btn-primary btn-sm" href="{{route('patient.deleteReq', [$list[$i]->aid])}}">Delete</a>
+                            </td>
+                        </tr>
+                        @endfor
+                    </tbody>
+                  </table>
+                  
+                  <div class="row">
+                    <div class="col-12 col-md-12">
+                      <a class="btn btn-primary btn-block" href="{{route('patient.getList')}}">Download List</a>
+                    </div>
+                  </div>
                 </div>
               </div>
+              @endif
             </div>
         </div>
     </div>

@@ -11,6 +11,7 @@ use App\Models\Record;
 use App\Models\Subscription;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use PDF;
 
 class PatientsController extends Controller
 {
@@ -271,6 +272,21 @@ class PatientsController extends Controller
         }
     }
 
+    function getList()
+    {
+        $id = auth()->user()->id;
+        $patient = Patient::where('userId',$id)->get();
+        $list = DB::table('appointments')
+                    ->join('doctors','appointments.docId','=','doctors.id')
+                    ->join('users','doctors.userId','=','users.id')
+                    ->where('patientId',$patient[0]['id'])
+                    ->get();
+        
+        view()->share('list',$list);
+        $pdf = PDF::loadview('patient/list_view',$list);
+        return $pdf->download('Appointment_List.pdf');
+    }
+
     function docList()
     {
         $doctors = DB::table('doctors')
@@ -287,6 +303,20 @@ class PatientsController extends Controller
                     ->where('patientId',$patient[0]['id'])
                     ->get();
         return view('patient.prescriptions')->with('pres',$pres);
+    }
+
+    function getPresc($date)
+    {
+        $id = auth()->user()->id;
+        $patient = Patient::where('userId',$id)->get();
+        $presc = DB::table('prescriptions')
+                    ->where('patientId',$patient[0]['id'])
+                    ->where('created_at',$date)
+                    ->get();
+        
+        view()->share('presc',$presc);
+        $pdf = PDF::loadview('patient/presc_view',$presc);
+        return $pdf->download('Prescription.pdf');
     }
 
     function subPlans()
