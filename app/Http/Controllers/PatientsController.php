@@ -354,4 +354,10 @@ class PatientsController extends Controller
         $subs = DB::table('subplans')->get();
         return view('patient.subPlans')->with('subs',$subs);
     }
+
+    function editPlan($id)
+    {
+        $id = auth()->user()->id;
+        $patient = Patient::where('userId',$id)->get();
+    }
 }
