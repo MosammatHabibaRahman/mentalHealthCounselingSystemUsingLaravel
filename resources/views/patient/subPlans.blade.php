@@ -61,7 +61,7 @@
                           <li>Features: {{$subs[0]->features}}</li>
                         </ul>
                       </p>
-                      <a href="/patient/changeSub?btn=Basic" class="btn btn-primary">Switch to Basic</a>
+                      <a class="btn btn-primary" href="{{route('patient.editPlan', [$subs[0]->id])}}">Switch to Basic</a>
                     </div>
                 </div>
             </div>
@@ -77,7 +77,7 @@
                             <li>Features: {{$subs[1]->features}}</li>
                         </ul>
                       </p>
-                      <a href="/patient/changeSub?btn=Standard" class="btn btn-primary">Switch to Standard</a>
+                      <a class="btn btn-primary" href="{{route('patient.editPlan', [$subs[1]->id])}}">Switch to Standard</a>
                     </div>
                 </div>
             </div>
@@ -93,7 +93,7 @@
                             <li>Features: {{$subs[2]->features}}</li>
                         </ul>
                       </p>
-                      <a href="/patient/changeSub?btn=Premium" class="btn btn-primary">Switch to Premium</a>
+                      <a class="btn btn-primary" href="{{route('patient.editPlan', [$subs[2]->id])}}">Switch to Premium</a>
                     </div>
                 </div>
             </div>

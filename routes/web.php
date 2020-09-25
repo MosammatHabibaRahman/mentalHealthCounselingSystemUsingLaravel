@@ -39,6 +39,7 @@ Route::get('/patient/prescriptions',[App\Http\Controllers\PatientsController::cl
 Route::get('/patient/prescriptions/{date}',[App\Http\Controllers\PatientsController::class, 'getPresc'])->name('patient.getPresc');
 
 Route::get('/patient/subPlans',[App\Http\Controllers\PatientsController::class, 'subPlans'])->name('patient.subPlans');
+Route::get('/patient/subPlans/{planId}',[App\Http\Controllers\PatientsController::class, 'editPlan'])->name('patient.editPlan');
 
 Route::get('/patient/createRecord',[App\Http\Controllers\PatientsController::class, 'createRecord'])->name('patient.createRecord');
 Route::post('/patient/createRecord',[App\Http\Controllers\PatientsController::class, 'insertRecord']);

@@ -355,9 +355,16 @@ class PatientsController extends Controller
         return view('patient.subPlans')->with('subs',$subs);
     }
 
-    function editPlan($id)
+    function editPlan($planId)
     {
         $id = auth()->user()->id;
         $patient = Patient::where('userId',$id)->get();
+        $sub = Subscription::where('patientId',$patient[0]['id'])->get();
+
+        $updatedSub = Subscription::find($sub[0]->id);
+        $updatedSub->subPlanId = $planId;
+        $updatedSub->save();
+
+        return redirect()->route('patient.subPlans');
     }
 }
