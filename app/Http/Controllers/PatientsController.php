@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -188,12 +188,13 @@ class PatientsController extends Controller
 
         if(Hash::check($request->password,$encpassword))
         {
-            print_r('true');
+            //print_r('true');
             $user = User::find(auth()->user()->id);
             $user->password = Hash::make($request->newpassword);
             $user->save();
         }
-        //return redirect()->route('logout');
+
+        return redirect('login')->with(Auth::logout());
     }
 
     function appointment()
