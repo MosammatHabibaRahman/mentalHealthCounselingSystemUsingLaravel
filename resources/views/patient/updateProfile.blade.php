@@ -45,10 +45,6 @@
                     </li>
                 </ul>
             </div>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
-            </form>
         </nav>
 
         <div class="container mt-4">
@@ -59,20 +55,37 @@
                             <strong>Update Profile</strong>
                         </div>
                         <div class="card-body">
-                            <form method="post">
+                            <form method="post" enctype="multipart/form-data">
+                                @csrf
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="form-group">
-                                            <label for="name"><strong>Full Name:</strong></label>
-                                        <input type="text" class="form-control" name="name" id="name" value="{{$patient[0]->name}}"/>
+                                            <label for="name"><strong>Name:</strong></label>
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" value="{{$patient[0]->name}}"/>
                                         </div>
                                     </div>
         
                                     <div class="col-12 col-md-6">
                                         <div class="form-group">
                                             <label for="email"><strong>Email:</strong></label>
-                                            <input type="email" class="form-control" name="email" id="email" value="{{$patient[0]->email}}"/>
-                                          </div>
+                                            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" value="{{$patient[0]->email}}"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12 col-md-12">
+                                        @error('name')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12 col-md-12">
+                                        @error('email')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
         
@@ -80,17 +93,18 @@
                                     <div class="col-12 col-md-4">
                                         <div class="form-group">
                                             <label for="phone"><strong>Phone:</strong></label>
-                                            <input type="text" class="form-control" name="phone" id="phone" value="{{$patient[0]->phone}}"/>
-                                          </div>
+                                            <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" id="phone" value="{{$patient[0]->phone}}"/> 
+                                        </div>
+                                    
                                     </div>
         
                                     <div class="col-12 col-md-4">
                                         <div class="form-group">
                                             <label for="gender"><strong>Gender:</strong></label>
                                             <select class="form-control" name="gender" id="gender">
-                                                <option>Male</option>
-                                                <option>Female</option>
-                                                <option>Other</option>
+                                                <option {{ $patient[0]->gender == 'Male' ? 'selected' : '' }}>Male</option>
+                                                <option {{ $patient[0]->gender == 'Female' ? 'selected' : '' }}>Female</option>
+                                                <option {{ $patient[0]->gender == 'Other' ? 'selected' : '' }}>Other</option>
                                             </select>
                                         </div>
                                     </div>
@@ -99,14 +113,14 @@
                                         <div class="form-group">
                                             <label for="bloodtype"><strong>Blood Type:</strong></label>
                                             <select class="form-control" name="bloodtype" id="bloodtype">
-                                                <option>A+</option>
-                                                <option>A-</option>
-                                                <option>B+</option>
-                                                <option>B-</option>
-                                                <option>AB+</option>
-                                                <option>AB-</option>
-                                                <option>O+</option>
-                                                <option>O-</option>
+                                                <option {{ $patient[0]->bloodType == 'A+' ? 'selected' : '' }}>A+</option>
+                                                <option {{ $patient[0]->bloodType == 'A-' ? 'selected' : '' }}>A-</option>
+                                                <option {{ $patient[0]->bloodType == 'B+' ? 'selected' : '' }}>B+</option>
+                                                <option {{ $patient[0]->bloodType == 'B-' ? 'selected' : '' }}>B-</option>
+                                                <option {{ $patient[0]->bloodType == 'AB+' ? 'selected' : '' }}>AB+</option>
+                                                <option {{ $patient[0]->bloodType == 'AB-' ? 'selected' : '' }}>AB-</option>
+                                                <option {{ $patient[0]->bloodType == 'O+' ? 'selected' : '' }}>O+</option>
+                                                <option {{ $patient[0]->bloodType == 'O-' ? 'selected' : '' }}>O-</option>
                                             </select>
                                         </div>
                                     </div>
@@ -114,9 +128,26 @@
         
                                 <div class="row">
                                     <div class="col-12 col-md-12">
-                                        <div class="input-group mb-3">
-                                            <input type="file" name="propic" id="propic" value=""/>
-                                          </div>
+                                        @error('phone')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12 col-md-12">
+                                        <div class="form-group">
+                                            <label for="propic"><strong>Profile Picture:</strong></label>
+                                            <input type="file" class="form-control-file @error('propic') is-invalid @enderror" name="propic" id="propic" value=""/>
+                                        </div>    
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12 col-md-12">
+                                        @error('propic')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
 

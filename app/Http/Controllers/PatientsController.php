@@ -10,6 +10,7 @@ use App\Models\Patient;
 use App\Models\Record;
 use App\Models\Subscription;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class PatientsController extends Controller
 {
@@ -169,6 +170,34 @@ class PatientsController extends Controller
                         ->where('users.id',$id)
                         ->get();
         return view('patient.updateProfile')->with('patient',$patient);
+    }
+
+    function editProfile(Request $request)
+    {
+        $user = auth()->user();
+
+        $request->validate([
+            'name'  => 'required|string|max:255',
+            'email'      => ['required','string','email','max:255',Rule::unique('users')->ignore($user->id)],
+            'phone'  => 'required|digits:11',
+            'propic'      => 'required|image'
+        ]);
+
+        $updateduser=User::find($user->id);
+        $updateduser->name = $request->name;
+        $updateduser->email = $request->email;
+        $updateduser->save();
+
+        $patient=Patient::where('userId',$user->id)->get();
+        
+        $updatedpatient=Patient::find($patient[0]['id']);
+        $updatedpatient->phone = $request->phone;
+        $updatedpatient->gender = $request->gender;
+        $updatedpatient->bloodType = $request->bloodtype;
+        $updatedpatient->photo = $request->propic;
+        $updatedpatient->save();
+
+        return redirect()->route('patient.profile');
     }
 
     function changePassword()

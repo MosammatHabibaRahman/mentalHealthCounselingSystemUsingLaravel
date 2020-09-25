@@ -39,6 +39,7 @@ Route::get('/patient/updateRecord',[App\Http\Controllers\PatientsController::cla
 Route::post('/patient/updateRecord',[App\Http\Controllers\PatientsController::class, 'editRecord']);
 
 Route::get('/patient/updateProfile',[App\Http\Controllers\PatientsController::class, 'updateProfile'])->name('patient.updateProfile');
+Route::post('/patient/updateProfile',[App\Http\Controllers\PatientsController::class, 'editProfile']);
 
 Route::get('/patient/changePassword',[App\Http\Controllers\PatientsController::class, 'changePassword'])->name('patient.changePassword');
 Route::post('/patient/changePassword',[App\Http\Controllers\PatientsController::class, 'updatePassword']);
