@@ -56,26 +56,44 @@
                     </div>
                     <div class="card-body">
                         <form method="post">
+                          @csrf
                           <div class="row">
                             <div class="col-12 col-md-12">
                               <div class="form-group">
-                                <select class="form-control" name="doctor" id="doctor">
-                                  <option selected="">Choose a Doctor</option>
+                                <select class="form-control @error('doctor') is-invalid @enderror" name="doctor" id="doctor">
                                   @for($i=0; $i<count($doctors); $i++)
-                                <option value="{{$doctors[$i]->id}}">{{$doctors[$i]->name}}</option>
+                                    <option value="{{$doctors[$i]->id}}">{{$doctors[$i]->name}}</option>
                                   @endfor
                                 </select>
                               </div>
                             </div>
                           </div>
+
+                          <div class="row">
+                            <div class="col-12 col-md-12">
+                              @error('doctor')
+                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                              @enderror
+                            </div>
+                          </div>
+
                           <div class="row">
                             <div class="col-12 col-md-12">
                               <div class="form-group">
                                 <label for="description">Description</label>
-                                <textarea class="form-control" name="description" id="description" rows="3"></textarea>
+                                <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" rows="3"></textarea>
                               </div>
                             </div>
                           </div>
+
+                          <div class="row">
+                            <div class="col-12 col-md-12">
+                              @error('description')
+                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                              @enderror
+                            </div>
+                          </div>
+
                           <div class="row">
                             <div class="col-12 col-md-12">
                               <button type="submit" class="btn btn-primary btn-block">Send Request</button>

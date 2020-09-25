@@ -26,8 +26,11 @@ Route::get('/patient/create',[App\Http\Controllers\PatientsController::class, 'c
 Route::post('/patient/create',[App\Http\Controllers\PatientsController::class, 'store']);
 
 Route::get('/patient/profile',[App\Http\Controllers\PatientsController::class, 'profile'])->name('patient.profile');
+
 Route::get('/patient/appointment',[App\Http\Controllers\PatientsController::class, 'appointment'])->name('patient.appointment');
+Route::post('/patient/appointment',[App\Http\Controllers\PatientsController::class, 'addReq']);
 Route::get('/patient/appointment/{id}',[App\Http\Controllers\PatientsController::class, 'deleteReq'])->name('patient.deleteReq');
+
 Route::get('/patient/docList',[App\Http\Controllers\PatientsController::class, 'docList'])->name('patient.docList');
 Route::get('/patient/prescriptions',[App\Http\Controllers\PatientsController::class, 'prescriptions'])->name('patient.prescriptions');
 Route::get('/patient/subPlans',[App\Http\Controllers\PatientsController::class, 'subPlans'])->name('patient.subPlans');

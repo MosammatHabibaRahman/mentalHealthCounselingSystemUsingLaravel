@@ -237,14 +237,38 @@ class PatientsController extends Controller
                     ->get();
         $doctors = DB::table('doctors')
                     ->join('users','users.id','=','doctors.userId')
+                    ->select('doctors.id as id','users.name as name')
                     ->get();
+        
         return view('patient.appointment')->with('list',$list)->with('doctors',$doctors);
+    }
+
+    function addReq(Request $request)
+    {
+        $request->validate([
+            'description'  => 'required|string|max:255'
+        ]);
+
+        $id = auth()->user()->id;
+        $patient = Patient::where('userId',$id)->get();
+
+        $appointment = new Appointment();
+        $appointment->description = $request->description;
+        $appointment->docId = $request->doctor;
+        $appointment->patientId = $patient[0]['id'];
+        $appointment->save();
+
+        return redirect()->route('patient.appointment');
     }
 
     function deleteReq($id)
     {
         $apt = Appointment::find($id);
-        print($apt);
+        
+        if(Appointment::destroy($id))
+        {
+            return redirect()->route('patient.appointment');
+        }
     }
 
     function docList()
